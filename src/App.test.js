@@ -1,8 +1,16 @@
-import { render, screen } from '@testing-library/react';
+import { render, fireEvent, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('adds a todo item', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  
+  const inputElement = screen.getByRole('textbox');
+  const buttonElement = screen.getByRole('button');
+  
+  fireEvent.change(inputElement, { target: { value: 'Test Todo' } });
+  fireEvent.click(buttonElement);
+  
+  const todoElement = screen.getByText('Test Todo');
+  
+  expect(todoElement).toBeInTheDocument();
 });
