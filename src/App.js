@@ -39,10 +39,13 @@ function App() {
         </div>
 
         <div>
-          <ul className="list-disc list-inside">
+          <ul>
             {todos.map((todo, index) => (
-              <li className="TextColor text-xl text-left mx-auto w-3/5" key={index}>
-                {todo}
+              <li
+                className="TextColor text-xl text-left mx-auto w-3/5 pt-4"
+                key={index}
+              >
+                &#x2022; {todo}
               </li>
             ))}
           </ul>
