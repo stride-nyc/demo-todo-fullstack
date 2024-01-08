@@ -1,17 +1,29 @@
 import express from "express";
+import cors from "cors";
 
 const PORT = 3000;
 
 const app = express();
 
-// app.use(express.json());
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      return callback(null, true);
+    },
+  })
+);
+
+app.use(express.json());
 
 app.get("/", (req, res) => {
   // * Might be a health check or something
   res.send("Hello, world!");
 });
 
-export default app;
+app.get("/api/todos", (req, res) => {
+  console.log("GET /api/todos");
+  res.send(["todo1", "todo2"]);
+});
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);

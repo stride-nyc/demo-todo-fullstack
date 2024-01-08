@@ -1,10 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import StrideLogo from "./stride-logo-white.png";
 
 function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
+  const fetchTodoList = async () =>
+    setTodos(
+      await fetch("http://localhost:3000/api/todos")
+        .then((resp) => resp.json())
+        .catch((err) => [])
+    );
+
+  useEffect(() => {
+    fetchTodoList();
+  }, []);
 
   const handleAddTodo = (event) => {
     event.preventDefault();
