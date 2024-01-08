@@ -20,9 +20,17 @@ app.get("/", (req, res) => {
   res.send("Hello, world!");
 });
 
+const CURRENT_TODOS = ["todo1", "todo2"];
 app.get("/api/todos", (req, res) => {
   console.log("GET /api/todos");
-  res.send(["todo1", "todo2"]);
+  res.send(CURRENT_TODOS);
+});
+
+app.post("/api/todos", (req, res) => {
+  console.log("POST /api/todos");
+  const { todo } = req.body;
+  CURRENT_TODOS.push(todo);
+  res.send(CURRENT_TODOS);
 });
 
 app.listen(PORT, () => {

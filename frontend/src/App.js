@@ -5,6 +5,7 @@ import StrideLogo from "./stride-logo-white.png";
 function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
+
   const fetchTodoList = async () =>
     setTodos(
       await fetch("http://localhost:3000/api/todos")
@@ -12,13 +13,25 @@ function App() {
         .catch((err) => [])
     );
 
+  const createTodoItem = async (todo) =>
+    setTodos(
+      await fetch("http://localhost:3000/api/todos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({todo}),
+      }).then((resp) => resp.json())
+    );
+
   useEffect(() => {
     fetchTodoList();
   }, []);
 
-  const handleAddTodo = (event) => {
+  const handleAddTodo = async (event) => {
     event.preventDefault();
-    setTodos([...todos, input]);
+    await createTodoItem(input);
+    // setTodos([...todos, input]);
     setInput("");
   };
 
