@@ -17,13 +17,6 @@ async function connect() {
       driver: sqlite3.cached.Database,
     });
 
-  await DB.exec(`
-      CREATE TABLE IF NOT EXISTS TODOs (
-        id INTEGER PRIMARY KEY,
-        description TEXT NOT NULL
-      )
-    `);
-
   return DB;
 }
 
