@@ -1,0 +1,8 @@
+-- migrate:up
+CREATE TABLE IF NOT EXISTS TODOs (
+  id INTEGER PRIMARY KEY,
+  description TEXT NOT NULL
+)
+
+-- migrate:down
+DROP TABLE IF EXISTS TODOs
