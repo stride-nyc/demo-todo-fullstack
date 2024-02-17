@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import StrideLogo from "./stride-logo-white.png";
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import StrideLogo from './stride-logo-white.png';
 
 function App() {
   const [todos, setTodos] = useState([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
 
   const fetchTodoList = async () =>
     setTodos(
-      await fetch("http://localhost:3000/api/todos")
+      await fetch('http://localhost:4000/api/todos')
         .then((resp) => resp.json())
         .catch((err) => [])
     );
 
   const createTodoItem = async (todo) =>
     setTodos(
-      await fetch("http://localhost:3000/api/todos", {
-        method: "POST",
+      await fetch('http://localhost:4000/api/todos', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({todo}),
+        body: JSON.stringify({ todo }),
       }).then((resp) => resp.json())
     );
 
@@ -32,7 +32,7 @@ function App() {
     event.preventDefault();
     await createTodoItem(input);
     // setTodos([...todos, input]);
-    setInput("");
+    setInput('');
   };
 
   const handleInputChange = (event) => {
@@ -40,22 +40,22 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <header className="App-Logo flex justify-center">
-        <img src={StrideLogo} alt="Stride" />
+    <div className='App'>
+      <header className='App-Logo flex justify-center'>
+        <img src={StrideLogo} alt='Stride' />
       </header>
-      <p className="TextColor text-5xl">What would you like to do?</p>
+      <p className='TextColor text-5xl'>What would you like to do?</p>
 
-      <div className="mx-auto w-1/2">
+      <div className='mx-auto w-1/2'>
         <div>
-          <form onSubmit={handleAddTodo} className="space-y-4">
+          <form onSubmit={handleAddTodo} className='space-y-4'>
             <input
               value={input}
               onChange={handleInputChange}
-              className="input input-bordered w-full max-w-xs mx-4"
+              className='input input-bordered w-full max-w-xs mx-4'
             />
 
-            <button type="submit" className="btn mx-4">
+            <button type='submit' className='btn mx-4'>
               Add Todo
             </button>
           </form>
@@ -65,7 +65,7 @@ function App() {
           <ul>
             {todos.map((todo, index) => (
               <li
-                className="TextColor text-xl text-left mx-auto w-3/5 pt-4"
+                className='TextColor text-xl text-left mx-auto w-3/5 pt-4'
                 key={index}
               >
                 &#x2022; {todo}
