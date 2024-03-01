@@ -30,7 +30,7 @@ async function connect() {
 async function readAllTodos() {
   const db = await connect();
   const results = await db.all('SELECT * FROM TODOs');
-  return results.map((todo) => todo.description);
+  return results;
 }
 
 app.use(
@@ -62,6 +62,13 @@ app.post('/api/todos', async (req, res) => {
   await stmt.run(todo);
   const current_todos = await readAllTodos();
   res.send(current_todos);
+});
+
+app.delete('/api/todos/:id', async (req, res) => {
+  const { id } = req.params;
+  const db = await connect();
+  await db.run('DELETE FROM TODOs WHERE id = ?', id);
+  res.status(204).send();
 });
 
 app.listen(PORT, () => {

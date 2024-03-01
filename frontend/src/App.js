@@ -24,6 +24,17 @@ function App() {
       }).then((resp) => resp.json())
     );
 
+  const handleDeleteTodo = async (id) => {
+    try {
+      await fetch(`http://localhost:4000/api/todos/${id}`, {
+        method: 'DELETE',
+      });
+      setTodos(todos.filter(todo => todo.id !== id));
+    } catch (error) {
+      alert('Failed to delete todo item');
+    }
+  };
+
   useEffect(() => {
     fetchTodoList();
   }, []);
@@ -31,7 +42,6 @@ function App() {
   const handleAddTodo = async (event) => {
     event.preventDefault();
     await createTodoItem(input);
-    // setTodos([...todos, input]);
     setInput('');
   };
 
@@ -66,9 +76,10 @@ function App() {
             {todos.map((todo, index) => (
               <li
                 className='TextColor text-xl text-left mx-auto w-3/5 pt-4'
-                key={index}
+                key={todo.id}
               >
-                &#x2022; {todo}
+                &#x2022; {todo.description}
+                <button onClick={() => handleDeleteTodo(todo.id)} className='btn btn-error btn-xs ml-4'>Delete</button>
               </li>
             ))}
           </ul>

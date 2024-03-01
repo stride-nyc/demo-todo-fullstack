@@ -1,0 +1,23 @@
+User Story: As a user, I want a 'delete' button for my Todo items so that I can easily remove tasks that are no longer needed.
+
+Acceptance Criteria:
+	•	A 'delete' button is visible next to each Todo item in the list.
+	•	Clicking the 'delete' button removes the item from the list displayed on the frontend.
+	•	The deletion action sends a DELETE request to the backend, removing the item from the database.
+	•	The frontend interface updates to reflect the removal of the item, without needing to refresh the page.
+	•	If the deletion is successful, the user receives a confirmation message.
+	•	If the deletion fails, the user receives an error message and the item remains visible.
+
+Technical Details:
+Frontend:
+	Modification: In the App component, modify the JSX in the map function that renders Todo items to include a 'delete' button next to each item.
+	Event Handling: Implement a function `handleDeleteTodo` that sends a DELETE request to `/api/todos/:id`, where `:id` is the unique identifier of the Todo item to be deleted.
+	State Update: Upon successful deletion, update the `todos` state to remove the deleted item, triggering a re-render of the list.
+Backend:
+	Endpoint: Implement a new DELETE endpoint `/api/todos/:id` that removes the Todo item with the specified `id` from the database.
+	Database Operation: Use the `sqlite` library to execute a DELETE statement on the TODOs table, using the provided `id`.
+Database Schema:
+	Note: Ensure that each Todo item has a unique identifier (`id`) that can be used to reference it for deletion.
+Notes:
+	Error Handling: Both frontend and backend should include appropriate error handling for the delete operation, including but not limited to invalid `id` values and database errors.
+	Testing: Update existing tests to cover the new delete functionality, ensuring that items can be added, deleted, and that the UI updates accordingly. Include tests for both successful and failed deletion scenarios.
