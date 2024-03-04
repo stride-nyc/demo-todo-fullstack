@@ -30,6 +30,7 @@ function App() {
         method: 'DELETE',
       });
       setTodos(todos.filter(todo => todo.id !== id));
+      alert('Todo item successfully deleted');
     } catch (error) {
       alert('Failed to delete todo item');
     }
