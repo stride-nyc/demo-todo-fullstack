@@ -8,3 +8,5 @@ node_modules/
 
 .vscode/
 /backend/MY_COOL.db
+
+.cache/
