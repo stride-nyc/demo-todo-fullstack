@@ -1,0 +1,7 @@
+autopilot:
+  include_file_formats:
+  - js
+  - jsx
+  - ts
+  - tsx
+  log_level: WARN

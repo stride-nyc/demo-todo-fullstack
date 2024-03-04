@@ -14,3 +14,24 @@ test('adds a todo item', () => {
   
   expect(todoElement).toBeInTheDocument();
 });
+
+test('deletes a todo item', async () => {
+  render(<App />);
+
+  // Add a todo item first
+  const inputElement = screen.getByRole('textbox');
+  const addButtonElement = screen.getByText('Add Todo');
+  fireEvent.change(inputElement, { target: { value: 'Test Todo to Delete' } });
+  fireEvent.click(addButtonElement);
+
+  // Wait for the item to be added
+  const todoElement = await screen.findByText('Test Todo to Delete');
+  expect(todoElement).toBeInTheDocument();
+
+  // Assuming delete button is added next to each todo item
+  const deleteButtonElement = screen.getByLabelText('Delete Test Todo to Delete');
+  fireEvent.click(deleteButtonElement);
+
+  // Wait for the item to be removed
+  await expect(screen.queryByText('Test Todo to Delete')).not.toBeInTheDocument();
+});

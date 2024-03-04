@@ -24,6 +24,12 @@ function App() {
       }).then((resp) => resp.json())
     );
 
+  const deleteTodoItem = async (index) => {
+    const newTodos = [...todos];
+    newTodos.splice(index, 1);
+    setTodos(newTodos);
+  };
+
   useEffect(() => {
     fetchTodoList();
   }, []);
@@ -31,7 +37,6 @@ function App() {
   const handleAddTodo = async (event) => {
     event.preventDefault();
     await createTodoItem(input);
-    // setTodos([...todos, input]);
     setInput('');
   };
 
@@ -69,6 +74,7 @@ function App() {
                 key={index}
               >
                 &#x2022; {todo}
+                <button aria-label={'Delete ' + todo} onClick={() => deleteTodoItem(index)} className='btn btn-error btn-xs ml-4'>Delete</button>
               </li>
             ))}
           </ul>
