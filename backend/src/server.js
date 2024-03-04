@@ -12,7 +12,7 @@ const db = knex(knexfile.development);
 
 async function readAllTodos() {
   const results = await db.select('*').from('todos');
-  return results.map((todo) => todo.description);
+  return results;
 }
 
 app.use(
@@ -41,6 +41,15 @@ app.post('/api/todos', async (req, res) => {
   const { todo } = req.body;
 
   await db('todos').insert({ description: todo });
+  const current_todos = await readAllTodos();
+  res.send(current_todos);
+});
+
+app.delete('/api/todos/:id', async (req, res) => {
+  console.log('DELETE /api/todos/:id');
+  const { id } = req.params;
+
+  await db('todos').where('id', id).del();
   const current_todos = await readAllTodos();
   res.send(current_todos);
 });

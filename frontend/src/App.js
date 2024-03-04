@@ -24,6 +24,13 @@ function App() {
       }).then((resp) => resp.json())
     );
 
+  const deleteTodoItem = async (id) =>
+    setTodos(
+      await fetch(`http://localhost:4000/api/todos/${id}`, {
+        method: 'DELETE',
+      }).then((resp) => resp.json())
+    );
+
   useEffect(() => {
     fetchTodoList();
   }, []);
@@ -31,7 +38,6 @@ function App() {
   const handleAddTodo = async (event) => {
     event.preventDefault();
     await createTodoItem(input);
-    // setTodos([...todos, input]);
     setInput('');
   };
 
@@ -68,7 +74,7 @@ function App() {
                 className='TextColor text-xl text-left mx-auto w-3/5 pt-4'
                 key={index}
               >
-                &#x2022; {todo}
+                &#x2022; {todo.description} <button aria-label={`Delete ${todo.description}`} onClick={() => deleteTodoItem(todo.id)}>Delete</button>
               </li>
             ))}
           </ul>
