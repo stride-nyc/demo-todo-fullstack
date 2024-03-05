@@ -5,6 +5,7 @@ import StrideLogo from './stride-logo-white.png';
 function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState('');
+  const [inputError, setInputError] = useState(false);
 
   const fetchTodoList = async () =>
     setTodos(
@@ -30,13 +31,18 @@ function App() {
 
   const handleAddTodo = async (event) => {
     event.preventDefault();
+    if (input.trim() === '') {
+      setInputError(true);
+      return;
+    }
     await createTodoItem(input);
-    // setTodos([...todos, input]);
     setInput('');
+    setInputError(false);
   };
 
   const handleInputChange = (event) => {
     setInput(event.target.value);
+    if (inputError) setInputError(false);
   };
 
   return (
@@ -52,10 +58,12 @@ function App() {
             <input
               value={input}
               onChange={handleInputChange}
-              className='input input-bordered w-full max-w-xs mx-4'
+              className={`input input-bordered w-full max-w-xs mx-4 ${inputError ? 'border-red-500' : ''}`}
+              aria-invalid={inputError}
+              aria-describedby={inputError ? 'input-error' : undefined}
             />
-
-            <button type='submit' className='btn mx-4'>
+            {inputError && <p id='input-error' className='text-red-500'>Input cannot be blank</p>}
+            <button type='submit' className='btn mx-4' disabled={!input.trim()}>
               Add Todo
             </button>
           </form>
