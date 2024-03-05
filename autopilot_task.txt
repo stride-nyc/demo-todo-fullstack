@@ -1,20 +1,22 @@
-{
-  "User Story": "As a user, I want to ensure that todo items cannot be added without names, to prevent blank items from appearing in my list.",
-  "Acceptance Criteria": [
-    "1. The 'Add Todo' button MUST be disabled when the input field for the todo item name is empty.",
-    "2. When the input field is empty and the user attempts to submit a new todo item, visual feedback MUST be provided indicating that a name is required. This could be in the form of a tooltip or a text warning near the input field.",
-    "3. Upon entering at least one character into the input field, the 'Add Todo' button becomes enabled, allowing the user to submit the new todo item.",
-    "4. The application MUST NOT send a request to the backend to create a new todo item if the input field is empty.",
-    "5. The frontend validation for the input field MUST be consistent with the backend validation, ensuring that no empty todo items can be created through direct API calls.",
-    "6. Unit tests MUST be updated or added to cover the scenario where the 'Add Todo' button is disabled/enabled based on the input field's content.",
-    "7. Integration tests MUST be updated or added to ensure that the application behaves as expected, particularly that no empty todo items can be added and appropriate feedback is provided to the user."
-  ],
-  "Technical Notes": [
-    "1. Implement state management for the 'Add Todo' button's enabled/disabled status based on the input field's content in the App component.",
-    "2. Utilize React's useState hook to manage the input field's state and derive the button's state from it.",
-    "3. For visual feedback, consider using conditional rendering in React to display a warning message when the input field is empty and the user attempts to submit a new todo item.",
-    "4. Ensure the backend endpoint '/api/todos' for creating new todo items validates the request body to reject empty descriptions.",
-    "5. Update the existing test case in the provided test file to include a scenario where the input field is empty, and the 'Add Todo' button should be disabled.",
-    "6. Use Tailwind CSS classes for styling the warning message and disabled button to maintain consistency with the existing application design."
-  ]
-}
+User Story: As a user, I want a 'delete' button for my Todo items so that I can easily remove tasks that are no longer needed.
+
+Acceptance Criteria:
+	•	A 'delete' button is visible next to each Todo item in the list.
+	•	Clicking the 'delete' button removes the item from the list displayed on the frontend.
+	•	The deletion is persisted, meaning the item is also removed from the database.
+	•	After deletion, the Todo list is updated without requiring a page refresh.
+
+Technical Details:
+Frontend:
+	Modification: In the App component, modify the JSX inside the map function that renders Todo items to include a 'delete' button next to each Todo item.
+	Event Handling: Add an onClick event handler to the 'delete' button that calls a function, e.g., handleDeleteTodo, passing the Todo item's unique identifier (e.g., id) as an argument.
+	State Update: In the handleDeleteTodo function, use the fetch API to send a DELETE request to the backend with the Todo item's id. Upon successful deletion, filter out the deleted Todo item from the todos state to update the UI.
+Backend:
+	Endpoint: Implement a new DELETE endpoint in the Express app, e.g., /api/todos/:id, where :id is the unique identifier of the Todo item to be deleted.
+	Database Operation: In the DELETE endpoint handler, use the Knex library to execute a DELETE operation on the 'todos' table, targeting the row with the matching id.
+	Response: After successful deletion, return a success status code (e.g., 200) and optionally, the updated list of Todo items.
+Database:
+	Schema: Ensure the 'todos' table schema includes a unique identifier (id) for each Todo item, which will be used to identify which item to delete.
+Notes:
+	Error Handling: Implement error handling for both frontend and backend. On the frontend, display a meaningful message if the deletion fails. On the backend, return an appropriate error response if the deletion operation fails or if the Todo item with the specified id does not exist.
+	Testing: Update existing tests to cover the new 'delete' functionality. This includes unit tests for the backend endpoint and integration tests for the frontend to ensure the delete button works as expected.

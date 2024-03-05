@@ -45,6 +45,13 @@ function App() {
     setInput(event.target.value);
   };
 
+  const handleDeleteTodo = async (id) => {
+    await fetch(`http://localhost:4000/api/todos/${id}`, {
+      method: 'DELETE',
+    });
+    setTodos(todos.filter(todo => todo.id !== id));
+  };
+
   return (
     <div className='App'>
       <header className='App-Logo flex justify-center'>
@@ -75,7 +82,7 @@ function App() {
                 className='TextColor text-xl text-left mx-auto w-3/5 pt-4'
                 key={index}
               >
-                &#x2022; {todo}
+                &#x2022; {todo.description} <button onClick={() => handleDeleteTodo(todo.id)} className='btn btn-error btn-xs'>Delete</button>
               </li>
             ))}
           </ul>
