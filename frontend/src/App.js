@@ -5,6 +5,7 @@ import StrideLogo from './stride-logo-white.png';
 function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
   const fetchTodoList = async () =>
     setTodos(
@@ -13,7 +14,8 @@ function App() {
         .catch((err) => [])
     );
 
-  const createTodoItem = async (todo) =>
+  const createTodoItem = async (todo) => {
+    if (!todo.trim()) return;
     setTodos(
       await fetch('http://localhost:4000/api/todos', {
         method: 'POST',
@@ -23,15 +25,19 @@ function App() {
         body: JSON.stringify({ todo }),
       }).then((resp) => resp.json())
     );
+  };
 
   useEffect(() => {
     fetchTodoList();
   }, []);
 
+  useEffect(() => {
+    setIsButtonDisabled(input.trim().length === 0);
+  }, [input]);
+
   const handleAddTodo = async (event) => {
     event.preventDefault();
     await createTodoItem(input);
-    // setTodos([...todos, input]);
     setInput('');
   };
 
@@ -55,9 +61,10 @@ function App() {
               className='input input-bordered w-full max-w-xs mx-4'
             />
 
-            <button type='submit' className='btn mx-4'>
+            <button type='submit' className='btn mx-4' disabled={isButtonDisabled}>
               Add Todo
             </button>
+            {isButtonDisabled && <p className='text-red-500'>Name is required</p>}
           </form>
         </div>
 

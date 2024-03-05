@@ -39,7 +39,9 @@ app.get('/api/todos', async (req, res) => {
 app.post('/api/todos', async (req, res) => {
   console.log('POST /api/todos');
   const { todo } = req.body;
-
+  if (!todo.trim()) {
+    return res.status(400).send({ error: 'Description cannot be empty' });
+  }
   await db('todos').insert({ description: todo });
   const current_todos = await readAllTodos();
   res.send(current_todos);
