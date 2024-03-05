@@ -1,19 +1,13 @@
 import express from "express";
 import cors from "cors";
 import knex from 'knex';
-
+import knexfile from "../knexfile.js";
 
 const PORT = 4000;
 
 const app = express();
 
-const db = knex({
-  client: 'sqlite3',
-  connection: {
-    filename: './MY_COOL.db'
-  },
-  useNullAsDefault: true
-});
+const db = knex(knexfile.development);
 
 
 async function readAllTodos() {
