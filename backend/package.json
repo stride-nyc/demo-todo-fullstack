@@ -9,7 +9,8 @@
     "migrate:make": "knex migrate:make --stub ./templates/migration.stub.js ",
     "migrate:up": "knex migrate:up",
     "migrate:down": "knex migrate:down",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "db:reset": "rm My_COOL.db; find ./migrations -type f ! -name '20240304204026_init-todo.js' -delete; npm run migrate:up"
   },
   "keywords": [],
   "author": "",
