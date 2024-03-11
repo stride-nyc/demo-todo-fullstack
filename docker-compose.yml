@@ -1,0 +1,10 @@
+version: '3'
+services:
+  db:
+    build:
+      context: ./
+      dockerfile: ./docker/postgres/Dockerfile
+    environment:
+      POSTGRES_DB: "demo_todo_fullstack"
+    ports:
+      - "54320:5432"
