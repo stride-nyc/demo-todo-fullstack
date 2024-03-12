@@ -5,12 +5,13 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "db:migrate:down": "knex migrate:down",
+    "db:migrate:up": "knex migrate:up",
+    "db:reset:docker-postgres": "docker-compose down -v; find ./migrations -type f ! -name '20240304204026_init-todo.js' -delete; docker-compose up -d;",
+    "db:reset": "rm My_COOL.db; find ./migrations -type f ! -name '20240304204026_init-todo.js' -delete; npm run migrate:up",
+    "db:migrate:make": "knex migrate:make --stub ./templates/migration.stub.js ",
     "start": "nodemon src/server.js",
-    "migrate:make": "knex migrate:make --stub ./templates/migration.stub.js ",
-    "migrate:up": "knex migrate:up",
-    "migrate:down": "knex migrate:down",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "db:reset": "rm My_COOL.db; find ./migrations -type f ! -name '20240304204026_init-todo.js' -delete; npm run migrate:up"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
