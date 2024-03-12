@@ -6,10 +6,10 @@
   "main": "server.js",
   "scripts": {
     "db:migrate:down": "knex migrate:down",
-    "db:migrate:up": "knex migrate:up",
-    "db:reset:docker-postgres": "docker-compose down -v; find ./migrations -type f ! -name '20240304204026_init-todo.js' -delete; docker-compose up -d;",
-    "db:reset": "rm My_COOL.db; find ./migrations -type f ! -name '20240304204026_init-todo.js' -delete; npm run migrate:up",
-    "db:migrate:make": "knex migrate:make --stub ./templates/migration.stub.js ",
+    "db:migrate:up": "knex migrate:up --knexfile ./src/_db/knexfile.js",
+    "db:reset:docker-postgres": "docker-compose down -v; find ./src/_db/migrations -type f ! -name '20240304204026_init-todo.js' -delete; docker-compose up -d;",
+    "db:reset:sqlite3": "rm ./src/_db/My_COOL.db; find ./src/_db/migrations -type f ! -name '20240304204026_init-todo.js' -delete; npm run db:migrate:up",
+    "db:migrate:make": "knex migrate:make --stub ./templates/migration.stub.js --knexfile ./src/_db/knexfile.js",
     "start": "nodemon src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

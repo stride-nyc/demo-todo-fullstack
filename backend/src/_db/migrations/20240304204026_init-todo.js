@@ -1,5 +1,5 @@
 export const up = async function (knex) {
-  return knex.schema.createTable('todos', function(table) {
+  return knex.schema.createTable('todos', function (table) {
     table.increments('id').primary();
     table.text('description').notNullable();
   });

@@ -1,16 +1,18 @@
 import express from "express";
 import cors from "cors";
 import knex from 'knex';
-import knexfile from "../knexfile.js";
+import knexfile from "./_db/knexfile.js";
 
 const PORT = 4000;
-
 const app = express();
 
-const db = knex(knexfile.development);
 
+let db;
+db = knex(knexfile);
 
-async function readAllTodos() {
+console.log('db_connection', db.client.config);
+
+async function readAllTodos () {
   const results = await db.select('*').from('todos');
   return results.map((todo) => todo.description);
 }
