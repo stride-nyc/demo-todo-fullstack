@@ -1,0 +1,10 @@
+version: '3'
+name: demo_todo_fullstack #! This has to be under_scores
+services:
+  db:
+    container_name: demo_todo_fullstack_db
+    build:
+      context: ./
+      dockerfile: ./docker/postgres/Dockerfile
+    ports:
+      - "54320:5432"

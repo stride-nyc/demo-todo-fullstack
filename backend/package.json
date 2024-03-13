@@ -5,21 +5,24 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "db:migrate:down": "knex migrate:down",
+    "db:migrate:up": "knex migrate:up --knexfile ./src/_db/knexfile.js",
+    "db:reset:docker-postgres": "docker-compose down -v; find ./src/_db/migrations -type f ! -name '20240304204026_init-todo.js' -delete; docker-compose up -d;",
+    "db:reset:sqlite3": "rm ./src/_db/My_COOL.db; find ./src/_db/migrations -type f ! -name '20240304204026_init-todo.js' -delete; npm run db:migrate:up",
+    "db:migrate:make": "knex migrate:make --stub ./templates/migration.stub.js --knexfile ./src/_db/knexfile.js",
     "start": "nodemon src/server.js",
-    "migrate:make": "knex migrate:make --stub ./templates/migration.stub.js ",
-    "migrate:up": "knex migrate:up",
-    "migrate:down": "knex migrate:down",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "db:reset": "rm My_COOL.db; find ./migrations -type f ! -name '20240304204026_init-todo.js' -delete; npm run migrate:up"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.18.2",
     "knex": "^3.1.0",
     "nodemon": "^3.0.2",
+    "pg": "^8.11.3",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }
