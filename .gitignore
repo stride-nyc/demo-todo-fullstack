@@ -10,3 +10,6 @@ node_modules/
 /backend/MY_COOL.db
 
 .cache/
+
+.conductor
+*.csv
