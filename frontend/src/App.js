@@ -6,14 +6,15 @@ function App() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState('');
 
-  const fetchTodoList = async () =>
+  const fetchTodoList = async () => {
     setTodos(
       await fetch('http://localhost:4000/api/todos')
         .then((resp) => resp.json())
         .catch((err) => [])
     );
+  }
 
-  const createTodoItem = async (todo) =>
+  const createTodoItem = async (todo) => {
     setTodos(
       await fetch('http://localhost:4000/api/todos', {
         method: 'POST',
@@ -21,8 +22,9 @@ function App() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ todo }),
-      }).then((resp) => resp.json())
+      }).then((resp) => resp.json()).catch((err) => [])
     );
+  }
 
   useEffect(() => {
     fetchTodoList();
@@ -49,7 +51,9 @@ function App() {
       <div className='mx-auto w-1/2'>
         <div>
           <form onSubmit={handleAddTodo} className='space-y-4'>
+            <label htmlFor="todo-description">Todo Description</label>
             <input
+              id="todo-description"
               value={input}
               onChange={handleInputChange}
               className='input input-bordered w-full max-w-xs mx-4'

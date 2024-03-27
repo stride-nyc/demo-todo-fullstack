@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "daisyui": "^4.4.23",
+    "nock": "^13.5.4",
     "tailwindcss": "^3.4.0"
   }
 }
